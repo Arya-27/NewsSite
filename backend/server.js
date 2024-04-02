@@ -22,7 +22,6 @@ app.use(
 const port = 3000;
 
 const API_KEY = process.env.NEWSAPI_KEY;
-console.log(API_KEY)
 const url = "https://newsapi.org/v2/everything?q=";
 
 app.get("/", (req, res) => {
