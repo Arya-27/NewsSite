@@ -5,6 +5,7 @@ function reload() {
 }
 async function fetchNews(query) {
   const res = await fetch(`https://newssite-qltj.onrender.com/news?q=${query}`);
+
   const data = await res.json();
   bindData(data.articles);
 }
