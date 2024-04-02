@@ -12,7 +12,7 @@ app.use(express.static("public"));
 // cors middleware
 app.use(
   cors({
-    origin: ["https://news-site-silk.vercel.app/"],
+    origin: ["https://news-site-silk.vercel.app"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     exposedHeaders: ["set-cookie"],
