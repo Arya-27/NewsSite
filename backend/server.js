@@ -12,7 +12,7 @@ app.use(express.static("public"));
 // cors middleware
 app.use(
   cors({
-    origin: ["https://news-site-silk.vercel.app"],
+    origin: ["https://news-site-silk.vercel.app", "http://127.0.0.1:5500"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     exposedHeaders: ["set-cookie"],
@@ -22,6 +22,7 @@ app.use(
 const port = 3000;
 
 const API_KEY = process.env.NEWSAPI_KEY;
+console.log(API_KEY)
 const url = "https://newsapi.org/v2/everything?q=";
 
 app.get("/", (req, res) => {
