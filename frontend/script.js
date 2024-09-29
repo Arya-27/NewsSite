@@ -1,13 +1,26 @@
 window.addEventListener("load", () => fetchNews("India"));
 
+const url = "https://newsdata.io/api/1/news";
+const API_KEY = "pub_548399906b6b89f3115ffb862dd5f2be4b761";
 function reload() {
   window.location.reload();
 }
-async function fetchNews(query) {
-  const res = await fetch(`https://newssite-qltj.onrender.com/news?q=${query}`);
 
-  const data = await res.json();
-  bindData(data.articles);
+async function fetchNews(query) {
+  try {
+    const response = await fetch(`${url}?apikey=${API_KEY}&q=${query}`);
+    const result = await response.json();
+    console.log(result);
+    if (result.status === "success") {
+      bindData(result.results);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  // const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
+  // const data = await res.json();
+  // console.log(data);
+  // if (data.articles) bindData(data.articles);
 }
 
 function bindData(articles) {
@@ -17,7 +30,7 @@ function bindData(articles) {
   cardsContainer.innerHTML = "";
 
   articles.forEach((article) => {
-    if (!article.urlToImage) return;
+    // if (!article.urlToImage) return;
     const cardClone = newsCardTemplate.content.cloneNode(true);
     fillDataInCard(cardClone, article);
     cardsContainer.appendChild(cardClone);
@@ -30,18 +43,18 @@ function fillDataInCard(cardClone, article) {
   const newsSource = cardClone.querySelector("#news-source");
   const newsDesc = cardClone.querySelector("#news-desc");
 
-  newsImg.src = article.urlToImage;
+  newsImg.src = article.image_url;
   newsTitle.innerHTML = article.title;
   newsDesc.innerHTML = article.description;
 
-  const date = new Date(article.publishedAt).toLocaleString("en-US", {
+  const date = new Date(article.pubDate).toLocaleString("en-US", {
     timeZone: "Asia/Jakarta",
   });
 
-  newsSource.innerHTML = `${article.source.name} ◽ ${date}`;
+  newsSource.innerHTML = `${article.creator} ◽ ${date}`;
 
   cardClone.firstElementChild.addEventListener("click", () => {
-    window.open(article.url, "_blank");
+    window.open(article.link, "_blank");
   });
 }
 
